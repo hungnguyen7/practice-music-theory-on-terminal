@@ -3,7 +3,7 @@ import random
 import time
 from constants import GUITAR_NOTES, GUITAR_FRETS, NUMBER_OF_GUITAR_STRINGS, SECTION_BREAK
 from utils import pretty_time, display_note_reminders, color_note
-
+import sys
 
 def print_fret_numbers():
     """Print the fret numbers with frets 5, 7, and 9 colored red."""
@@ -102,16 +102,20 @@ def guitar_note_practice():
     display_note_reminders()
 
     while True:
-        num_hidden = get_number_of_hidden_notes()
-        if not num_hidden:
-            continue
-        hidden_notes = generate_hidden_notes(num_hidden)
+        try:
+            num_hidden = get_number_of_hidden_notes()
+            if not num_hidden:
+                continue
+            hidden_notes = generate_hidden_notes(num_hidden)
 
-        start = time.time()
-        correct_notes, wrong_notes = guess_notes(hidden_notes)
-        end = time.time()
-        print(
-            f"You got {colored(correct_notes, 'green')} correct notes and {colored(wrong_notes, 'red')} wrong notes.")
-        print(f"Time taken: {pretty_time(end - start)}")
-        print(SECTION_BREAK)
-        print("Practice makes perfect! Let's try again.")
+            start = time.time()
+            correct_notes, wrong_notes = guess_notes(hidden_notes)
+            end = time.time()
+            print(
+                f"You got {colored(correct_notes, 'green')} correct notes and {colored(wrong_notes, 'red')} wrong notes.")
+            print(f"Time taken: {pretty_time(end - start)}")
+            print(SECTION_BREAK)
+            print("Practice makes perfect! Let's try again.")
+        except KeyboardInterrupt:
+            print("\nThanks for playing! Goodbye! 😊")
+            sys.exit(0)

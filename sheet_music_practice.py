@@ -3,9 +3,11 @@ from termcolor import colored
 import time
 from constants import NOTES_ON_SHEET, POSITION_MAP, SECTION_BREAK
 from utils import pretty_time, display_note_reminders
-
+import sys
 
 # * Define a template for an empty staff
+
+
 def create_empty_staff():
     return [
         " _______ ",  # * Line 5 (Top line)
@@ -54,9 +56,6 @@ def practice_identifying_hidden_note(staff, hidden_note):
         if user_answer == hidden_note["note"]:
             print(
                 f"Correct! The hidden note is {colored(user_answer, 'green')}")
-        elif user_answer == "Q":
-            print("Quitting...")
-            return None  # Indicate that the user chose to quit
 
     end_time = time.time()
     return end_time - start_time
@@ -69,18 +68,19 @@ def sheet_music_practice():
     time_records = []
 
     while True:
-        staff = create_empty_staff()  # Reset the staff for each round
-        place_notes_on_staff(staff)    # Place notes on the staff
-        hidden_note = hide_random_note(staff)  # Hide a note
+        try:
+            staff = create_empty_staff()  # Reset the staff for each round
+            place_notes_on_staff(staff)    # Place notes on the staff
+            hidden_note = hide_random_note(staff)  # Hide a note
 
-        time_taken = practice_identifying_hidden_note(staff, hidden_note)
+            time_taken = practice_identifying_hidden_note(staff, hidden_note)
 
-        if time_taken is None:  # User chose to quit
-            break
-
-        time_records.append(time_taken)
-        print(f"Time taken: {pretty_time(time_taken)}")
-        print(SECTION_BREAK)
-
-    if time_records:
-        print(f"Average time taken: {pretty_time(sum(time_records) / len(time_records))}")
+            time_records.append(time_taken)
+            print(f"Time taken: {pretty_time(time_taken)}")
+            print(SECTION_BREAK)
+        except KeyboardInterrupt:
+            if time_records:
+                print(
+                    f"\nAverage time taken: {pretty_time(sum(time_records) / len(time_records))}")
+            print("\nThanks for playing! Goodbye! 😊")
+            sys.exit(0)
