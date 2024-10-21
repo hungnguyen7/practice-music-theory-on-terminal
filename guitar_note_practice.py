@@ -100,8 +100,8 @@ def get_number_of_hidden_notes():
     """Get the number of hidden notes from the user."""
     try:
         num_hidden = int(input("How many notes would you like to guess? "))
-        if num_hidden > 78:
-            print("There are only 78 notes on the guitar. Please try again.")
+        if num_hidden > 72:
+            print("There are only 72 notes on the guitar. Please try again.")
         else:
             return num_hidden
     except ValueError:
@@ -109,8 +109,14 @@ def get_number_of_hidden_notes():
 
 
 def generate_hidden_notes(num_hidden):
-    """Generate random hidden notes based on the number specified."""
-    return [(random.randint(1, 6), random.randint(1, 12)) for _ in range(num_hidden)]
+    """Generate unique random hidden notes based on the number specified."""
+    unique_notes = set()
+
+    while len(unique_notes) < num_hidden:
+        note = (random.randint(1, 6), random.randint(1, 12))  # Randomly generate a note
+        unique_notes.add(note)  # Add to set, duplicates are ignored
+
+    return list(unique_notes)  # Convert the set back to a list
 
 
 def main():
