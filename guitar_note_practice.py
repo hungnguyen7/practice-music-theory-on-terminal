@@ -116,7 +116,8 @@ def get_number_of_hidden_notes():
     try:
         num_hidden = int(input("How many notes would you like to guess? "))
         if num_hidden > 72:
-            print("There are only 72 notes on the guitar. Please try again.")
+            print(colored(
+                "There are only 72 notes on the guitar. Please try again.", "red"))
         else:
             return num_hidden
     except ValueError:
@@ -142,6 +143,8 @@ def main():
 
     while True:
         num_hidden = get_number_of_hidden_notes()
+        if not num_hidden:
+            continue
         hidden_notes = generate_hidden_notes(num_hidden)
         correct_notes, wrong_notes = guess_notes(hidden_notes)
         print(
