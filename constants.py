@@ -35,6 +35,19 @@ NOTES_ON_SHEET = [
     {"note": "F", "on": "line", "position": 5}
 ]
 
+# Map positions to the index in the staff
+POSITION_MAP = {
+    ("line", 1): 8,
+    ("space", 1): 7,
+    ("line", 2): 6,
+    ("space", 2): 5,
+    ("line", 3): 4,
+    ("space", 3): 3,
+    ("line", 4): 2,
+    ("space", 4): 1,
+    ("line", 5): 0
+}
+
 GUITAR_FRETS = 12
 
 NUMBER_OF_GUITAR_STRINGS = 6
