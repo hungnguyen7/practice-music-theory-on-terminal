@@ -1,7 +1,8 @@
 import random
 from termcolor import colored
-from constants import NOTES_ON_SHEET, POSITION_MAP, SECTION_BREAK
 import time
+from constants import NOTES_ON_SHEET, POSITION_MAP, SECTION_BREAK
+from utils import pretty_time, display_note_reminders
 
 
 # * Define a template for an empty staff
@@ -38,13 +39,9 @@ def hide_random_note(staff):
     return hidden_note
 
 
-def pretty_time(seconds):
-    """Format the time taken in seconds to a human-readable format."""
-    minutes, seconds = divmod(seconds, 60)
-    return f"{colored(int(minutes), 'green')} minutes and {colored(round(seconds, 2), 'green')} seconds"
-
-
 def sheet_music_practice():
+    print("Welcome to Sheet Music Practice 🎼🎵🎶!")
+    display_note_reminders()
     while True:
         staff = create_empty_staff()  # * Reset the staff for each round
         place_notes_on_staff(staff)    # * Place notes on the staff

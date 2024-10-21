@@ -1,14 +1,8 @@
 from termcolor import colored
 import random
 import time
-from constants import GUITAR_NOTES, NOTE_COLORS, GUITAR_FRETS, NUMBER_OF_GUITAR_STRINGS, SECTION_BREAK
-
-
-def color_note(note):
-    """Return the note colored based on its value."""
-    padded_note = note.ljust(2)
-    color = NOTE_COLORS.get(note.strip())
-    return colored(padded_note, color)
+from constants import GUITAR_NOTES, GUITAR_FRETS, NUMBER_OF_GUITAR_STRINGS, SECTION_BREAK
+from utils import pretty_time, display_note_reminders, color_note
 
 
 def print_fret_numbers():
@@ -78,14 +72,6 @@ def guess_notes(hidden_notes):
     return correct_count, total_questions - correct_count
 
 
-def display_note_reminders():
-    """Display the note names to remind the user."""
-    print("Let's remember all the basic notes first:")
-    for note in ["C", "D", "E", "F", "G", "A", "B"]:
-        print(color_note(note), end=" ")
-    print()
-
-
 def get_number_of_hidden_notes():
     """Get the number of hidden notes from the user."""
     try:
@@ -108,12 +94,6 @@ def generate_hidden_notes(num_hidden):
     random.shuffle(all_notes)
 
     return all_notes[:num_hidden]
-
-
-def pretty_time(seconds):
-    """Format the time taken in seconds to a human-readable format."""
-    minutes, seconds = divmod(seconds, 60)
-    return f"{colored(int(minutes), 'green')} minutes and {colored(round(seconds, 2), 'green')} seconds"
 
 
 def guitar_note_practice():
