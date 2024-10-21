@@ -28,6 +28,8 @@ GUITAR_NOTES = {
 
 GUITAR_FRETS = 12
 
+NUMBER_OF_GUITAR_STRINGS = 6
+
 
 def color_note(note):
     """Return the note colored based on its value."""
@@ -115,9 +117,10 @@ def get_number_of_hidden_notes():
     """Get the number of hidden notes from the user."""
     try:
         num_hidden = int(input("How many notes would you like to guess? "))
-        if num_hidden > 72:
+        total_notes = NUMBER_OF_GUITAR_STRINGS * GUITAR_FRETS
+        if num_hidden > total_notes:
             print(colored(
-                "There are only 72 notes on the guitar. Please try again.", "red"))
+                f"There are only {total_notes} notes on the guitar. Please try again.", "red"))
         else:
             return num_hidden
     except ValueError:
