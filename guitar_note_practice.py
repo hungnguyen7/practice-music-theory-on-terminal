@@ -1,5 +1,6 @@
 from termcolor import colored
 import random
+import time
 
 # Each note is associated with different colors
 NOTE_COLORS = {
@@ -149,9 +150,14 @@ def main():
         if not num_hidden:
             continue
         hidden_notes = generate_hidden_notes(num_hidden)
+
+        start = time.time()
         correct_notes, wrong_notes = guess_notes(hidden_notes)
+        end = time.time()
         print(
             f"You got {colored(correct_notes, 'green')} correct notes and {colored(wrong_notes, 'red')} wrong notes.")
+        print(f"Time taken: {end - start:.2f} seconds.")
+
         print("Practice makes perfect! Let's try again.")
 
 
