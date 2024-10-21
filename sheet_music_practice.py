@@ -1,6 +1,6 @@
 import random
 from termcolor import colored
-from constants import NOTES_ON_SHEET, POSITION_MAP
+from constants import NOTES_ON_SHEET, POSITION_MAP, SECTION_BREAK
 import time
 
 
@@ -44,7 +44,7 @@ def pretty_time(seconds):
     return f"{colored(int(minutes), 'green')} minutes and {colored(round(seconds, 2), 'green')} seconds"
 
 
-def main():
+def sheet_music_practice():
     while True:
         staff = create_empty_staff()  # * Reset the staff for each round
         place_notes_on_staff(staff)    # * Place notes on the staff
@@ -69,7 +69,4 @@ def main():
         end = time.time()
 
         print(f"Time taken: {pretty_time(end - start)}")
-
-
-if __name__ == "__main__":
-    main()
+        print(SECTION_BREAK)

@@ -116,7 +116,7 @@ def pretty_time(seconds):
     return f"{colored(int(minutes), 'green')} minutes and {colored(round(seconds, 2), 'green')} seconds"
 
 
-def main():
+def guitar_note_practice():
     """Main function to run the guitar note guessing game."""
     print("Welcome to Guitar Note Practice 🎼🎵🎶🎸!")
     display_note_reminders()
@@ -135,7 +135,3 @@ def main():
         print(f"Time taken: {pretty_time(end - start)}")
         print(SECTION_BREAK)
         print("Practice makes perfect! Let's try again.")
-
-
-if __name__ == "__main__":
-    main()
