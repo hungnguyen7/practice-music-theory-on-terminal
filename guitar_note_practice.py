@@ -55,37 +55,52 @@ def print_fret_numbers():
     print(colored("Fret |", "black", "on_light_magenta") + " " + fret_line)
 
 
-def display_notes_on_strings(guitar_strings, hidden_notes):
+def display_notes_on_strings(hidden_notes):
     """Display the guitar notes, hiding specific ones based on the hidden notes list."""
     print_fret_numbers()
-    for string, notes in guitar_strings.items():
+    for string, notes in GUITAR_NOTES.items():
         colored_notes = [
             "__" if (string, idx) in hidden_notes else color_note(note)
             for idx, note in enumerate(notes)
         ]
-        print(colored(f"Str {string}|", "black", "on_light_magenta") + " " + ' | '.join(colored_notes[1:]))
+        print(colored(f"Str {string}|", "black",
+              "on_light_magenta") + " " + ' | '.join(colored_notes[1:]))
     print_fret_numbers()
     print()
 
 
-def guess_notes(hidden_notes, guitar_strings):
+def guess_notes(hidden_notes):
     """Prompt the user to guess the hidden notes and provide feedback."""
-    correct_notes = 0
-    wrong_notes = 0
-    for string, idx in hidden_notes:
-        print(f"######################### *Question {correct_notes + wrong_notes + 1}* #########################")
-        display_notes_on_strings(guitar_strings, hidden_notes)
-        user_input = input(f"Guess the note for string {string}, fret {idx}: ").strip().upper()
-        correct_note = guitar_strings[string][idx]
+    correct_count = 0
+    guessed_notes = set()
+
+    total_questions = len(hidden_notes)
+
+    for question_number, (string, idx) in enumerate(hidden_notes, start=1):
+        print(
+            f"######################### *Question {question_number} of {total_questions}* #########################")
+
+        # Display only the remaining hidden notes that haven't been guessed
+        remaining_hidden_notes = [(s, i) for (
+            s, i) in hidden_notes if (s, i) not in guessed_notes]
+        display_notes_on_strings(remaining_hidden_notes)
+
+        user_input = input(
+            f"Guess the note for string {string}, fret {idx}: ").strip().upper()
+        correct_note = GUITAR_NOTES[string][idx]
+
         if user_input == correct_note:
             print(colored(f"Correct! It's {correct_note}.", "green"))
-            correct_notes += 1
+            correct_count += 1
         else:
-            print(colored(f"Wrong! The correct note was {correct_note}.", "red"))
-            wrong_notes += 1
+            print(
+                colored(f"Wrong! The correct note was {correct_note}.", "red"))
+
+        guessed_notes.add((string, idx))  # Add guessed notes to the set
         print("-" * 65)
 
-    return correct_notes, wrong_notes
+    # Return the number of correct and wrong answers
+    return correct_count, total_questions - correct_count
 
 
 def display_note_reminders():
@@ -110,13 +125,14 @@ def get_number_of_hidden_notes():
 
 def generate_hidden_notes(num_hidden):
     """Generate unique random hidden notes based on the number specified."""
-    unique_notes = set()
+    # Generate all possible notes (1-6 for the first value, 1-12 for the second)
+    all_notes = [(x, y) for x in range(1, 7) for y in range(1, 13)]
 
-    while len(unique_notes) < num_hidden:
-        note = (random.randint(1, 6), random.randint(1, 12))  # Randomly generate a note
-        unique_notes.add(note)  # Add to set, duplicates are ignored
+    # Shuffle the list of all possible notes
+    random.shuffle(all_notes)
 
-    return list(unique_notes)  # Convert the set back to a list
+    # Select the first `num_hidden` notes from the shuffled list
+    return all_notes[:num_hidden]
 
 
 def main():
@@ -127,8 +143,9 @@ def main():
     while True:
         num_hidden = get_number_of_hidden_notes()
         hidden_notes = generate_hidden_notes(num_hidden)
-        correct_notes, wrong_notes = guess_notes(hidden_notes, GUITAR_NOTES)
-        print(f"You got {colored(correct_notes, 'green')} correct notes and {colored(wrong_notes, 'red')} wrong notes.")
+        correct_notes, wrong_notes = guess_notes(hidden_notes)
+        print(
+            f"You got {colored(correct_notes, 'green')} correct notes and {colored(wrong_notes, 'red')} wrong notes.")
         print("Practice makes perfect! Let's try again.")
 
 
