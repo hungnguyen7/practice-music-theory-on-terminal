@@ -34,7 +34,7 @@ def hide_random_note(staff):
     hidden_note = NOTES_ON_SHEET[hidden_note_index]
 
     pos = POSITION_MAP[(hidden_note["on"], hidden_note["position"])]
-    staff[pos] = staff[pos][:4] + " " + \
+    staff[pos] = staff[pos][:4] + colored("?", "black", "on_green") + \
         staff[pos][5:]  # * Remove the note representation
     return hidden_note
 
