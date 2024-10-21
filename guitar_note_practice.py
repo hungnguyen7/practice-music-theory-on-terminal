@@ -2,7 +2,7 @@ from termcolor import colored
 import random
 import time
 
-# Each note is associated with different colors
+# * Each note is associated with different colors
 NOTE_COLORS = {
     "E": "black",
     "F": "magenta",
@@ -31,6 +31,8 @@ GUITAR_FRETS = 12
 
 NUMBER_OF_GUITAR_STRINGS = 6
 
+SECTION_BREAK = "-" * 65
+
 
 def color_note(note):
     """Return the note colored based on its value."""
@@ -43,16 +45,16 @@ def print_fret_numbers():
     """Print the fret numbers with frets 5, 7, and 9 colored red."""
     frets = []
 
-    # Loop through fret numbers 1 to 12
+    # * Loop through fret numbers 1 to 12
     for i in range(1, 13):
         if i in [5, 7, 9]:
-            # Frets 5, 7, and 9 are colored red
+            # * Frets 5, 7, and 9 are colored red
             frets.append(colored(str(i).rjust(2), "red", "on_blue"))
         else:
-            # Standard white on blue color for other frets
+            # * Standard white on blue color for other frets
             frets.append(colored(str(i).rjust(2), "white", "on_blue"))
 
-    # Join the frets into a line with separators, colored white on blue
+    # * Join the frets into a line with separators, colored white on blue
     fret_line = colored(" | ", "white", "on_blue").join(frets)
 
     print(colored("Fret |", "black", "on_light_magenta") + " " + fret_line)
@@ -83,7 +85,7 @@ def guess_notes(hidden_notes):
         print(
             f"######################### *Question {question_number} of {total_questions}* #########################")
 
-        # Display only the remaining hidden notes that haven't been guessed
+        # * Display only the remaining hidden notes that haven't been guessed
         remaining_hidden_notes = [(s, i) for (
             s, i) in hidden_notes if (s, i) not in guessed_notes]
         display_notes_on_strings(remaining_hidden_notes)
@@ -99,10 +101,10 @@ def guess_notes(hidden_notes):
             print(
                 colored(f"Wrong! The correct note was {correct_note}.", "red"))
 
-        guessed_notes.add((string, idx))  # Add guessed notes to the set
-        print("-" * 65)
+        guessed_notes.add((string, idx))
+        print(SECTION_BREAK)
 
-    # Return the number of correct and wrong answers
+    # * Return the number of correct and wrong answers
     return correct_count, total_questions - correct_count
 
 
@@ -130,14 +132,18 @@ def get_number_of_hidden_notes():
 
 def generate_hidden_notes(num_hidden):
     """Generate unique random hidden notes based on the number specified."""
-    # Generate all possible notes (1-6 for the first value, 1-12 for the second)
+    # * Generate all possible notes (1-6 for the first value, 1-12 for the second)
     all_notes = [(x, y) for x in range(1, 7) for y in range(1, 13)]
 
-    # Shuffle the list of all possible notes
     random.shuffle(all_notes)
 
-    # Select the first `num_hidden` notes from the shuffled list
     return all_notes[:num_hidden]
+
+
+def pretty_time(seconds):
+    """Format the time taken in seconds to a human-readable format."""
+    minutes, seconds = divmod(seconds, 60)
+    return f"{colored(int(minutes), 'green')} minutes and {colored(round(seconds, 2), 'green')} seconds"
 
 
 def main():
@@ -156,8 +162,8 @@ def main():
         end = time.time()
         print(
             f"You got {colored(correct_notes, 'green')} correct notes and {colored(wrong_notes, 'red')} wrong notes.")
-        print(f"Time taken: {end - start:.2f} seconds.")
-
+        print(f"Time taken: {pretty_time(end - start)}")
+        print(SECTION_BREAK)
         print("Practice makes perfect! Let's try again.")
 
 
