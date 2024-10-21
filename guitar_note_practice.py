@@ -28,17 +28,32 @@ GUITAR_NOTES = {
 
 GUITAR_FRETS = 12
 
+
 def color_note(note):
     """Return the note colored based on its value."""
     padded_note = note.ljust(2)
     color = NOTE_COLORS.get(note.strip())
     return colored(padded_note, color)
 
+
 def print_fret_numbers():
-    """Print the fret numbers with a background color."""
-    frets = [str(i).rjust(2) for i in range(1, 13)]  # Right-justify fret numbers for alignment
-    fret_line = " | ".join(frets)
-    print(colored("Fret |", "black", "on_light_magenta") + " " + colored(fret_line, "white", "on_blue"))
+    """Print the fret numbers with frets 5, 7, and 9 colored red."""
+    frets = []
+
+    # Loop through fret numbers 1 to 12
+    for i in range(1, 13):
+        if i in [5, 7, 9]:
+            # Frets 5, 7, and 9 are colored red
+            frets.append(colored(str(i).rjust(2), "red", "on_blue"))
+        else:
+            # Standard white on blue color for other frets
+            frets.append(colored(str(i).rjust(2), "white", "on_blue"))
+
+    # Join the frets into a line with separators, colored white on blue
+    fret_line = colored(" | ", "white", "on_blue").join(frets)
+
+    print(colored("Fret |", "black", "on_light_magenta") + " " + fret_line)
+
 
 def display_notes_on_strings(guitar_strings, hidden_notes):
     """Display the guitar notes, hiding specific ones based on the hidden notes list."""
@@ -51,7 +66,8 @@ def display_notes_on_strings(guitar_strings, hidden_notes):
         print(colored(f"Str {string}|", "black", "on_light_magenta") + " " + ' | '.join(colored_notes[1:]))
     print_fret_numbers()
     print()
-    
+
+
 def guess_notes(hidden_notes, guitar_strings):
     """Prompt the user to guess the hidden notes and provide feedback."""
     correct_notes = 0
@@ -68,8 +84,9 @@ def guess_notes(hidden_notes, guitar_strings):
             print(colored(f"Wrong! The correct note was {correct_note}.", "red"))
             wrong_notes += 1
         print("-" * 65)
-    
+
     return correct_notes, wrong_notes
+
 
 def display_note_reminders():
     """Display the note names to remind the user."""
@@ -77,6 +94,7 @@ def display_note_reminders():
     for note in ["C", "D", "E", "F", "G", "A", "B"]:
         print(color_note(note), end=" ")
     print()
+
 
 def get_number_of_hidden_notes():
     """Get the number of hidden notes from the user."""
@@ -89,9 +107,11 @@ def get_number_of_hidden_notes():
     except ValueError:
         print("Please enter a valid number.")
 
+
 def generate_hidden_notes(num_hidden):
     """Generate random hidden notes based on the number specified."""
     return [(random.randint(1, 6), random.randint(1, 12)) for _ in range(num_hidden)]
+
 
 def main():
     """Main function to run the guitar note guessing game."""
@@ -104,6 +124,7 @@ def main():
         correct_notes, wrong_notes = guess_notes(hidden_notes, GUITAR_NOTES)
         print(f"You got {colored(correct_notes, 'green')} correct notes and {colored(wrong_notes, 'red')} wrong notes.")
         print("Practice makes perfect! Let's try again.")
+
 
 if __name__ == "__main__":
     main()
