@@ -1,6 +1,7 @@
 import random
 from termcolor import colored
 from constants import NOTES_ON_SHEET, POSITION_MAP
+import time
 
 
 # * Define a template for an empty staff
@@ -37,6 +38,12 @@ def hide_random_note(staff):
     return hidden_note
 
 
+def pretty_time(seconds):
+    """Format the time taken in seconds to a human-readable format."""
+    minutes, seconds = divmod(seconds, 60)
+    return f"{colored(int(minutes), 'green')} minutes and {colored(round(seconds, 2), 'green')} seconds"
+
+
 def main():
     while True:
         staff = create_empty_staff()  # * Reset the staff for each round
@@ -44,6 +51,7 @@ def main():
 
         hidden_note = hide_random_note(staff)  # * Hide a note
 
+        start = time.time()
         print("Identify the hidden note on the staff:")
         for line in staff:
             print(line)
@@ -58,6 +66,9 @@ def main():
                     f"Correct! The hidden note is {colored(user_answer, 'green')}")
             else:
                 print("Incorrect. Try again.")
+        end = time.time()
+
+        print(f"Time taken: {pretty_time(end - start)}")
 
 
 if __name__ == "__main__":
