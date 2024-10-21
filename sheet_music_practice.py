@@ -8,15 +8,15 @@ from utils import pretty_time, display_note_reminders
 # * Define a template for an empty staff
 def create_empty_staff():
     return [
-        " _______",  # * Line 5 (Top line)
-        "|       ",  # * Space 4
-        "|_______",  # * Line 4
-        "|       ",  # * Space 3
-        "|_______",  # * Line 3 (Middle line)
-        "|       ",  # * Space 2
-        "|_______",  # * Line 2
-        "|       ",  # * Space 1
-        "|_______"   # * Line 1 (Bottom line)
+        " _______ ",  # * Line 5 (Top line)
+        "|       |",  # * Space 4
+        "|_______|",  # * Line 4
+        "|       |",  # * Space 3
+        "|_______|",  # * Line 3 (Middle line)
+        "|       |",  # * Space 2
+        "|_______|",  # * Line 2
+        "|       |",  # * Space 1
+        "|_______|"   # * Line 1 (Bottom line)
     ]
 
 
