@@ -39,31 +39,48 @@ def hide_random_note(staff):
     return hidden_note
 
 
+def practice_identifying_hidden_note(staff, hidden_note):
+    print("Identify the hidden note on the staff:")
+    for line in staff:
+        print(line)
+
+    user_answer = ""
+    start_time = time.time()
+
+    while user_answer != hidden_note["note"]:
+        user_answer = input(
+            "What note is hidden? (E, F, G, A, B, C, D): ").strip().upper()
+
+        if user_answer == hidden_note["note"]:
+            print(
+                f"Correct! The hidden note is {colored(user_answer, 'green')}")
+        elif user_answer == "Q":
+            print("Quitting...")
+            return None  # Indicate that the user chose to quit
+
+    end_time = time.time()
+    return end_time - start_time
+
+
 def sheet_music_practice():
     print("Welcome to Sheet Music Practice 🎼🎵🎶!")
     display_note_reminders()
+
+    time_records = []
+
     while True:
-        staff = create_empty_staff()  # * Reset the staff for each round
-        place_notes_on_staff(staff)    # * Place notes on the staff
+        staff = create_empty_staff()  # Reset the staff for each round
+        place_notes_on_staff(staff)    # Place notes on the staff
+        hidden_note = hide_random_note(staff)  # Hide a note
 
-        hidden_note = hide_random_note(staff)  # * Hide a note
+        time_taken = practice_identifying_hidden_note(staff, hidden_note)
 
-        start = time.time()
-        print("Identify the hidden note on the staff:")
-        for line in staff:
-            print(line)
+        if time_taken is None:  # User chose to quit
+            break
 
-        user_answer = ""
-        while user_answer != hidden_note["note"]:
-            user_answer = input(
-                "What note is hidden? (E, F, G, A, B, C, D): ").strip().upper()
-
-            if user_answer == hidden_note["note"]:
-                print(
-                    f"Correct! The hidden note is {colored(user_answer, 'green')}")
-            else:
-                print("Incorrect. Try again.")
-        end = time.time()
-
-        print(f"Time taken: {pretty_time(end - start)}")
+        time_records.append(time_taken)
+        print(f"Time taken: {pretty_time(time_taken)}")
         print(SECTION_BREAK)
+
+    if time_records:
+        print(f"Average time taken: {pretty_time(sum(time_records) / len(time_records))}")
