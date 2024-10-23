@@ -22,11 +22,25 @@ GUITAR_NOTES = {
     1: ["E", "F", "F#", "G", "G#", "A", "A#", "B", "C", "C#", "D", "D#", "E"]
 }
 
+"""
+The "position" represents how high or low the note is on the staff.
+Positive positions (0 < x < 4.5) are within the staff:
+    - Position "0" is on the bottom line, with higher numbers indicating positions above.
+    - Position "4" on the line refers to the fifth line above the staff, any note above that position is considered outside of standard musical tablature.
+Negative positions indicate notes that are outside the staff, below the bottom line.
+The "line" refers to notes that sit on a line, and "space" refers to notes that sit between lines.
+E.g:
+    - Position "4" and on the "line" means the note on the fifth line (counting from the bottom)
+    - Position "4" and on the "space" means the note between the fifth and sixth lines.
+"""
 NOTES_ON_SHEET = [
+    # * Outside musical tablature
     {"note": "A", "on": "line", "position": -2},
     {"note": "B", "on": "space", "position": -2},
     {"note": "C", "on": "line", "position": -1},
     {"note": "D", "on": "space", "position": -1},
+
+    # * Inside musical tablature
     {"note": "E", "on": "line", "position": 0},
     {"note": "F", "on": "space", "position": 0},
     {"note": "G", "on": "line", "position": 1},
@@ -36,11 +50,12 @@ NOTES_ON_SHEET = [
     {"note": "D", "on": "line", "position": 3},
     {"note": "E", "on": "space", "position": 3},
     {"note": "F", "on": "line", "position": 4},
+
+    # * Outside musical tablature
     {"note": "G", "on": "space", "position": 4},
     {"note": "A", "on": "line", "position": 5},
 ]
 
-# Map positions to the index in the staff
 POSITION_MAP = {
     ("line", -2): 14,
     ("space", -2): 13,
