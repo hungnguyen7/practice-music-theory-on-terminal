@@ -26,6 +26,9 @@ def create_empty_staff():
         f"{EXTRA_LINE}{STAFF_LINE}{EXTRA_LINE}",
         f"{EXTRA_LINE}{STAFF_SPACE}{EXTRA_LINE}",
         f"{EXTRA_LINE}{STAFF_LINE}{EXTRA_LINE}",
+        f"{EXTRA_LINE}{STAFF_SPACE}{EXTRA_LINE}",
+        f"{EXTRA_LINE}{STAFF_LINE}{EXTRA_LINE}",
+        f"{EXTRA_LINE}{STAFF_SPACE}{EXTRA_LINE}",
     ]
 
 

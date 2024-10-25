@@ -35,6 +35,9 @@ E.g:
 """
 NOTES_ON_SHEET = [
     # * Outside musical tablature
+    {"note": "E", "on": "space", "position": -4},
+    {"note": "F", "on": "line", "position": -3},
+    {"note": "G", "on": "space", "position": -3},
     {"note": "A", "on": "line", "position": -2},
     {"note": "B", "on": "space", "position": -2},
     {"note": "C", "on": "line", "position": -1},
@@ -57,6 +60,9 @@ NOTES_ON_SHEET = [
 ]
 
 POSITION_MAP = {
+    ("space", -4): 17,
+    ("line", -3): 16,
+    ("space", -3): 15,
     ("line", -2): 14,
     ("space", -2): 13,
     ("line", -1): 12,
