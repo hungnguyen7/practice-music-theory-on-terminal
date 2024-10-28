@@ -5,6 +5,7 @@ from constants import GUITAR_NOTES, GUITAR_FRETS, NUMBER_OF_GUITAR_STRINGS, SECT
 from utils import pretty_time, display_note_reminders, color_note
 import sys
 
+
 def print_fret_numbers():
     """Print the fret numbers with frets 5, 7, and 9 colored red."""
     frets = []
@@ -24,14 +25,22 @@ def print_fret_numbers():
     print(colored("Fret |", "black", "on_light_magenta") + " " + fret_line)
 
 
-def display_notes_on_strings(hidden_notes):
+def display_notes_on_strings(hidden_notes, focused_hidden_note=None):
     """Display the guitar notes, hiding specific ones based on the hidden notes list."""
     print_fret_numbers()
     for string, notes in GUITAR_NOTES.items():
-        colored_notes = [
-            "__" if (string, idx) in hidden_notes else color_note(note)
-            for idx, note in enumerate(notes)
-        ]
+        colored_notes = []
+        for idx, note in enumerate(notes):
+            # * Check if the note is hidden
+            if (string, idx) in hidden_notes:
+                # * If the note is hidden and the current note is the focused note, color it white on dark grey
+                if focused_hidden_note and (string, idx) == focused_hidden_note:
+                    colored_notes.append(
+                        colored("__", "white", "on_dark_grey"))
+                else:
+                    colored_notes.append("__")
+            else:
+                colored_notes.append(color_note(note))
         print(colored(f"Str {string}|", "black",
               "on_light_magenta") + " " + ' | '.join(colored_notes[1:]))
     print_fret_numbers()
@@ -52,7 +61,8 @@ def guess_notes(hidden_notes):
         # * Display only the remaining hidden notes that haven't been guessed
         remaining_hidden_notes = [(s, i) for (
             s, i) in hidden_notes if (s, i) not in guessed_notes]
-        display_notes_on_strings(remaining_hidden_notes)
+        display_notes_on_strings(
+            hidden_notes=remaining_hidden_notes, focused_hidden_note=(string, idx))
 
         user_input = input(
             f"Guess the note for string {string}, fret {idx}: ").strip().upper()
